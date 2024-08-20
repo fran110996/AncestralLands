@@ -102,11 +102,30 @@
 
       var script = document.createElement("script");
       script.src = loaderUrl;
-      script.onload = () => {
+      
+      document.addEventListener('DOMContentLoaded', function () {
+      const initDataUnsafe = window.Telegram.WebApp.initDataUnsafe;
+
+      console.log('InitDataUnsafe:', initDataUnsafe);
+      console.log(Telegram.WebApp.WebAppInitData);
+      if (initDataUnsafe && initDataUnsafe.user) {
+        console.log('User Info:', initDataUnsafe.user);
+      } else {
+        console.log('User info not available.');
+        }
+    });
+      
+     script.onload = () => {
+        
         createUnityInstance(canvas, config, (progress) => {
           progressBarFull.style.width = 100 * progress + "%";
               }).then((unityInstance) => {
+                // console.log(window.TelegramGameProxy.initParams);
+                unityInstance.SendMessage("TelegramController", "SetWebAppUser",window.Telegram.WebApp.initDataUnsafe.user.id);
+                unityInstance.SendMessage("TelegramController", "SetWebAppName",window.Telegram.WebApp.initDataUnsafe.user.first_name);
+                // unityInstance.SendMessage("TelegramController", "SetWebAppUser", JSON.stringify(window.TelegramGameProxy.initParams));
                 loadingBar.style.display = "none";
+                unityInstance.SetFullscreen(1);
                 fullscreenButton.onclick = () => {
                   unityInstance.SetFullscreen(1);
                 };
@@ -118,5 +137,7 @@
       document.body.appendChild(script);
 
     </script>
+    
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
   </body>
 </html>
