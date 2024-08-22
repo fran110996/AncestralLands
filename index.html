@@ -125,11 +125,6 @@
                 unityInstance.SendMessage("TelegramController", "SetWebAppName",window.Telegram.WebApp.initDataUnsafe.user.first_name);
                 // unityInstance.SendMessage("TelegramController", "SetWebAppUser", JSON.stringify(window.TelegramGameProxy.initParams));
                 loadingBar.style.display = "none";
-                setTimeout(function () {
-                  unityInstance.SetFullscreen(1);
-                }
-                  }, 5000);
-              
                 fullscreenButton.onclick = () => {
                   unityInstance.SetFullscreen(1);
                 };
