@@ -125,6 +125,7 @@
                 unityInstance.SendMessage("TelegramController", "SetWebAppName",window.Telegram.WebApp.initDataUnsafe.user.first_name);
                 // unityInstance.SendMessage("TelegramController", "SetWebAppUser", JSON.stringify(window.TelegramGameProxy.initParams));
                 loadingBar.style.display = "none";
+                unityInstance.SetFullscreen(1);
                 fullscreenButton.onclick = () => {
                   unityInstance.SetFullscreen(1);
                 };
@@ -132,7 +133,7 @@
                 alert(message);
               });
             };
-
+      
       document.body.appendChild(script);
 
     </script>
