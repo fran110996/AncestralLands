@@ -21,9 +21,38 @@
         canvas.style.height = "100%";
         canvas.style.position = "fixed";
 
+        var buildUrl = "Build";
+        var loaderUrl = buildUrl + "/AncestralLands.loader.js";
+        var config = {
+        dataUrl: buildUrl + "/AncestralLands.data",
+        frameworkUrl: buildUrl + "/AncestralLands.framework.js",
+        codeUrl: buildUrl + "/AncestralLands.wasm",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "DefaultCompany",
+        productName: "Ancestral Lands",
+        productVersion: "0.1",
+        showBanner: unityShowBanner,
+
+        var script = document.createElement("script");
+        script.src = loaderUrl;
+
+          
+        document.addEventListener('DOMContentLoaded', function () {
+        const initDataUnsafe = window.Telegram.WebApp.initDataUnsafe;
+
+        console.log('InitDataUnsafe:', initDataUnsafe);
+        console.log(Telegram.WebApp.WebAppInitData);
+        if (initDataUnsafe && initDataUnsafe.user) {
+        console.log('User Info:', initDataUnsafe.user);
+        } else {
+        console.log('User info not available.');
+        }
+    });
+      };
+
         document.body.style.textAlign = "left";
       }
-
+      
       createUnityInstance(document.querySelector("#unity-canvas"), {
         dataUrl: "Build/AncestralLands.data",
         frameworkUrl: "Build/AncestralLands.framework.js",
@@ -35,6 +64,30 @@
         // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
         // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
       });
+
+     script.onload = () => {
+        
+        createUnityInstance(canvas, config, (progress) => {
+          progressBarFull.style.width = 100 * progress + "%";
+              }).then((unityInstance) => {
+                // console.log(window.TelegramGameProxy.initParams);
+                unityInstance.SendMessage("TelegramController", "SetWebAppUser",window.Telegram.WebApp.initDataUnsafe.user.id);
+                unityInstance.SendMessage("TelegramController", "SetWebAppName",window.Telegram.WebApp.initDataUnsafe.user.first_name);
+                // unityInstance.SendMessage("TelegramController", "SetWebAppUser", JSON.stringify(window.TelegramGameProxy.initParams));
+                loadingBar.style.display = "none";
+                unityInstance.SetFullscreen(1);
+                fullscreenButton.onclick = () => {
+                  unityInstance.SetFullscreen(1);
+                };
+              }).catch((message) => {
+                alert(message);
+              });
+            };
+      
+      document.body.appendChild(script);
+      
     </script>
+
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
   </body>
 </html>
