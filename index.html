@@ -123,7 +123,7 @@
                 // console.log(window.TelegramGameProxy.initParams);
                 unityInstance.SendMessage("TelegramController", "SetWebAppUser",window.Telegram.WebApp.initDataUnsafe.user.id);
                 unityInstance.SendMessage("TelegramController", "SetWebAppName",window.Telegram.WebApp.initDataUnsafe.user.first_name);
-                unityInstance.SendMessage("TelegramController", "GetCodeForAPI",window.Telegram.WebApp.initData);
+                unityInstance.SendMessage("TelegramController", "GetCodeForAPI",window.Telegram.WebApp.initDataUnsafe);
                 // unityInstance.SendMessage("TelegramController", "SetWebAppUser", JSON.stringify(window.TelegramGameProxy.initParams));
                 loadingBar.style.display = "none";
                 unityInstance.SetFullscreen(1);
