@@ -127,7 +127,7 @@
                 unityInstance.SendMessage("TelegramController", "GetCodeForAPI",window.Telegram.WebApp.initData);
                 // unityInstance.SendMessage("TelegramController", "SetWebAppUser", JSON.stringify(window.TelegramGameProxy.initParams));
                 loadingBar.style.display = "none";
-                //unityInstance.SetFullscreen(1);
+                //unityInstance.SetFullscreen(1); no full screen
               }).catch((message) => {
                 alert(message);
               });
